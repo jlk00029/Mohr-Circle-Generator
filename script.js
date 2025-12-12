@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // tan(2θp) = γxy / (εx - εy)
         let thetaP;
         if (Math.abs(epsilonX - epsilonY) < 1e-10) {
-            thetaP = 45; // When εx = εy
+            // When εx = εy, θp depends on the sign of γxy
+            thetaP = gammaXY >= 0 ? 45 : -45;
         } else {
             thetaP = Math.atan2(gammaXY, epsilonX - epsilonY) / 2;
             thetaP = thetaP * (180 / Math.PI); // Convert to degrees
@@ -139,7 +140,9 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.textAlign = 'center';
         
         // Determine nice tick intervals
-        const tickInterval = Math.ceil(maxValue / 4 / 50) * 50;
+        const TARGET_TICK_COUNT = 4; // Approximate number of ticks on each side of origin
+        const TICK_ROUND_VALUE = 50; // Round tick intervals to multiples of this value
+        const tickInterval = Math.ceil(maxValue / TARGET_TICK_COUNT / TICK_ROUND_VALUE) * TICK_ROUND_VALUE;
         
         for (let i = -Math.floor(maxValue / tickInterval); i <= Math.floor(maxValue / tickInterval); i++) {
             if (i === 0) continue;
