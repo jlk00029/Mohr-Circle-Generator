@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohr's Circle - Strain Visualization</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mohr's Circle for Strain</h1>
+            <p>Visualize strain transformations using Mohr's Circle</p>
+        </header>
+
+        <div class="content">
+            <div class="input-section">
+                <h2>Input Strain Components</h2>
+                <form id="strainForm">
+                    <div class="input-group">
+                        <label for="epsilonX">ε<sub>x</sub> (Normal strain in x-direction):</label>
+                        <input type="number" id="epsilonX" step="0.000001" value="400" required>
+                        <span class="unit">με (microstrain)</span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="epsilonY">ε<sub>y</sub> (Normal strain in y-direction):</label>
+                        <input type="number" id="epsilonY" step="0.000001" value="200" required>
+                        <span class="unit">με (microstrain)</span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="gammaXY">γ<sub>xy</sub> (Engineering shear strain):</label>
+                        <input type="number" id="gammaXY" step="0.000001" value="150" required>
+                        <span class="unit">με (microstrain)</span>
+                    </div>
+                    
+                    <button type="submit">Calculate and Plot</button>
+                </form>
+
+                <div class="results" id="results">
+                    <h3>Calculated Values</h3>
+                    <div class="result-item">
+                        <span class="result-label">Center (ε<sub>avg</sub>):</span>
+                        <span id="center" class="result-value">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Radius (R):</span>
+                        <span id="radius" class="result-value">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Principal Strain ε<sub>1</sub>:</span>
+                        <span id="epsilon1" class="result-value">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Principal Strain ε<sub>2</sub>:</span>
+                        <span id="epsilon2" class="result-value">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Maximum Shear Strain γ<sub>max</sub>:</span>
+                        <span id="gammaMax" class="result-value">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Principal Angle θ<sub>p</sub>:</span>
+                        <span id="thetaP" class="result-value">-</span>
+                    </div>
+                </div>
+
+                <div class="info">
+                    <h3>About Mohr's Circle for Strain</h3>
+                    <p><strong>Convention:</strong> This plot follows the standard textbook convention (MIT OCW, eFunda):</p>
+                    <ul>
+                        <li>Horizontal axis: Normal strain (ε)</li>
+                        <li>Vertical axis: γ<sub>xy</sub>/2 (shear strain, positive upward)</li>
+                        <li>Point X: (ε<sub>x</sub>, γ<sub>xy</sub>/2)</li>
+                        <li>Point Y: (ε<sub>y</sub>, -γ<sub>xy</sub>/2)</li>
+                    </ul>
+                    <p><strong>Formulas:</strong></p>
+                    <ul>
+                        <li>ε<sub>avg</sub> = (ε<sub>x</sub> + ε<sub>y</sub>) / 2</li>
+                        <li>R = √[((ε<sub>x</sub> - ε<sub>y</sub>)/2)² + (γ<sub>xy</sub>/2)²]</li>
+                        <li>ε<sub>1</sub> = ε<sub>avg</sub> + R</li>
+                        <li>ε<sub>2</sub> = ε<sub>avg</sub> - R</li>
+                        <li>γ<sub>max</sub> = 2R</li>
+                        <li>tan(2θ<sub>p</sub>) = γ<sub>xy</sub> / (ε<sub>x</sub> - ε<sub>y</sub>)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="plot-section">
+                <h2>Mohr's Circle Plot</h2>
+                <canvas id="mohrCanvas" width="800" height="800"></canvas>
+            </div>
+        </div>
+
+        <footer>
+            <p>Mohr's Circle Generator - Strain Analysis Tool</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
